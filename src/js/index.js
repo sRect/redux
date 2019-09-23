@@ -1,3 +1,8 @@
+// https://mp.weixin.qq.com/s/1jstaEeSUq2eMIUXEqJb-A
+import changeState from '@/store/index';
+import * as types from '@/store/actionType';
+
+console.log(changeState)
 window.onload = function() {
   class MyRedux {
     constructor() {
@@ -34,12 +39,14 @@ window.onload = function() {
     }
 
     changeColor = () => {
-      this.state.color = "deeppink";
+      this.state = changeState({ type: types.CHANGE_COLOR, color: 'deeppink'}, this.state);
+      // this.state.color = "deeppink";
       this.renderApp();
     }
 
     changeFont = () => {
-      this.state.fontSize = "20px";
+      this.state = changeState({ type: types.CHANGE_FONT, fontSize: '20px' }, this.state);
+      // this.state.fontSize = "20px";
       this.renderApp();
     }
 
