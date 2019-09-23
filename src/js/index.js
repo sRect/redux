@@ -48,13 +48,13 @@ window.onload = function() {
     changeColor = () => {
       this.stateDate = store.dispatch({ type: types.CHANGE_COLOR, color: 'deeppink'});
       // this.state.color = "deeppink";
-      this.renderApp(this.stateDate);
+      // this.renderApp(this.stateDate);
     }
 
     changeFont = () => {
       this.stateDate = store.dispatch({ type: types.CHANGE_FONT, fontSize: '40px' });
       // this.state.fontSize = "20px";
-      this.renderApp(this.stateDate);
+      // this.renderApp(this.stateDate);
     }
 
     bindEvents() {
@@ -70,8 +70,9 @@ window.onload = function() {
     init() {
       // 派发一个随机type,返回默认值
       this.stateDate = store.dispatch({ type: `@@redux/__INIT__${Math.random()}`});
-      this.renderApp();
+      // this.renderApp();
       this.bindEvents();
+      store.subscribe(() => this.renderApp());
     }
   }
 
