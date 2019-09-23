@@ -1,10 +1,8 @@
 import reducer from '@/store/reducer';
+import { initState } from '@/store/state';
 
 function createStore() {
-  let state = {
-    color: 'black',
-    fontSize: '30px'
-  };
+  let state = initState;
 
   const getState = () => state;
   const dispatch = action => {
