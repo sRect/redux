@@ -1,15 +1,14 @@
 // https://mp.weixin.qq.com/s/1jstaEeSUq2eMIUXEqJb-A
-import changeState from '@/store/index';
+import createStore from '@/store/index';
 import * as types from '@/store/actionType';
 
-console.log(changeState)
 window.onload = function() {
   class MyRedux {
     constructor() {
       this.state = {
-        color: 'blue',
-        fontSize: '14px'
-      }
+        color: '',
+        fontSize: ''
+      };
 
       this.DOM = {
         changeColorBtn: document.querySelector("#changeColorBtn"),
@@ -17,6 +16,14 @@ window.onload = function() {
         header: document.querySelector("#header"),
         content: document.querySelector("#content")
       }
+    }
+
+    get stateDate() {
+      return store.getState();
+    }
+
+    set stateDate(value) {
+      this.state = value;
     }
 
     renderHeader = ()　=> {
@@ -39,15 +46,15 @@ window.onload = function() {
     }
 
     changeColor = () => {
-      this.state = changeState({ type: types.CHANGE_COLOR, color: 'deeppink'}, this.state);
+      this.stateDate = store.changeState({ type: types.CHANGE_COLOR, color: 'deeppink'});
       // this.state.color = "deeppink";
-      this.renderApp();
+      this.renderApp(this.stateDate);
     }
 
     changeFont = () => {
-      this.state = changeState({ type: types.CHANGE_FONT, fontSize: '20px' }, this.state);
+      this.stateDate = store.changeState({ type: types.CHANGE_FONT, fontSize: '40px' });
       // this.state.fontSize = "20px";
-      this.renderApp();
+      this.renderApp(this.stateDate);
     }
 
     bindEvents() {
@@ -61,11 +68,13 @@ window.onload = function() {
     }
 
     init() {
+      this.stateDate = store.changeState({ type: `@@redux/__INIT__${Math.random()}`});
       this.renderApp();
       this.bindEvents();
     }
   }
 
   const myRedux = new MyRedux();
+  const store = createStore();
   myRedux.init();
 }
