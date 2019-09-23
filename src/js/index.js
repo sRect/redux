@@ -28,14 +28,14 @@ window.onload = function() {
 
     renderHeader = ()　=> {
       const { header} = this.DOM;
-      const { color, fontSize } = this.state;
+      const { color, fontSize } = this.stateDate;
       header.style.color = color;
       header.style.fontSize = fontSize;
     }
 
     renderContent = () => {
       const { content } = this.DOM;
-      const { color, fontSize } = this.state;
+      const { color, fontSize } = this.stateDate;
       content.style.color = color;
       content.style.fontSize = fontSize;
     }
@@ -46,13 +46,13 @@ window.onload = function() {
     }
 
     changeColor = () => {
-      this.stateDate = store.changeState({ type: types.CHANGE_COLOR, color: 'deeppink'});
+      this.stateDate = store.dispatch({ type: types.CHANGE_COLOR, color: 'deeppink'});
       // this.state.color = "deeppink";
       this.renderApp(this.stateDate);
     }
 
     changeFont = () => {
-      this.stateDate = store.changeState({ type: types.CHANGE_FONT, fontSize: '40px' });
+      this.stateDate = store.dispatch({ type: types.CHANGE_FONT, fontSize: '40px' });
       // this.state.fontSize = "20px";
       this.renderApp(this.stateDate);
     }
@@ -68,7 +68,8 @@ window.onload = function() {
     }
 
     init() {
-      this.stateDate = store.changeState({ type: `@@redux/__INIT__${Math.random()}`});
+      // 派发一个随机type,返回默认值
+      this.stateDate = store.dispatch({ type: `@@redux/__INIT__${Math.random()}`});
       this.renderApp();
       this.bindEvents();
     }
