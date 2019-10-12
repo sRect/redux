@@ -1,4 +1,9 @@
 export const initState = {
-  color: 'black',
-  fontSize: '30px'
+  info: {
+    color: 'orange',
+    fontSize: '30px'
+  },
+  counter: {
+    count: 10
+  }
 }

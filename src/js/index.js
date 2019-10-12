@@ -1,20 +1,21 @@
 // https://mp.weixin.qq.com/s/1jstaEeSUq2eMIUXEqJb-A
+// https://github.com/brickspert/blog/issues/22#coordination
 import createStore from '@/store/index';
 import * as types from '@/store/actionType';
 
 window.onload = function() {
   class MyRedux {
     constructor() {
-      this.state = {
-        color: '',
-        fontSize: ''
-      };
+      this.state = null;
 
       this.DOM = {
         changeColorBtn: document.querySelector("#changeColorBtn"),
         changeFontBtn: document.querySelector("#changeFontBtn"),
         header: document.querySelector("#header"),
-        content: document.querySelector("#content")
+        content: document.querySelector("#content"),
+        countID: document.querySelector("#countID"),
+        increment: document.querySelector("#increment"),
+        decrement: document.querySelector("#decrement")
       }
     }
 
@@ -28,21 +29,28 @@ window.onload = function() {
 
     renderHeader = ()　=> {
       const { header} = this.DOM;
-      const { color, fontSize } = this.stateDate;
+      const { color, fontSize } = this.stateDate.info;
       header.style.color = color;
       header.style.fontSize = fontSize;
     }
 
     renderContent = () => {
       const { content } = this.DOM;
-      const { color, fontSize } = this.stateDate;
+      const { color, fontSize } = this.stateDate.info;
       content.style.color = color;
       content.style.fontSize = fontSize;
+    }
+
+    renderCount = () => {
+      const { countID } = this.DOM;
+      const { count } = this.stateDate.counter;
+      countID.innerText = count;
     }
 
     renderApp() {
       this.renderHeader();
       this.renderContent();
+      this.renderCount();
     }
 
     changeColor = () => {
@@ -57,20 +65,32 @@ window.onload = function() {
       // this.renderApp(this.stateDate);
     }
 
+    increment = () => {
+      this.stateDate = store.dispatch({ type: types.INCREMENT});
+    }
+
+    decrement = () => {
+      this.stateDate = store.dispatch({ type: types.DECREMENT })
+    }
+
     bindEvents() {
       const wm = new WeakMap();
-      const { changeColorBtn, changeFontBtn } = this.DOM;
+      const { changeColorBtn, changeFontBtn, increment, decrement } = this.DOM;
       wm.set(changeColorBtn, this.changeColor);
       wm.set(changeFontBtn, this.changeFont);
+      wm.set(increment, this.increment);
+      wm.set(decrement, this.decrement);
 
       changeColorBtn.addEventListener('click', wm.get(changeColorBtn), false);
       changeFontBtn.addEventListener('click', wm.get(changeFontBtn), false);
+      increment.addEventListener('click', wm.get(increment), false);
+      decrement.addEventListener('click', wm.get(decrement), false);
     }
 
     init() {
       // 派发一个随机type,返回默认值
       this.stateDate = store.dispatch({ type: `@@redux/__INIT__${Math.random()}`});
-      // this.renderApp();
+      this.renderApp();
       this.bindEvents();
       store.subscribe(() => this.renderApp());
     }

@@ -104,7 +104,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      title: 'promiseA+',
+      title: 'myRedux',
       hash: true,
       minify: {
         collapseWhitespace: true, // 折叠空行
