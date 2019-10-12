@@ -70,7 +70,21 @@ window.onload = function() {
     }
 
     decrement = () => {
-      this.stateDate = store.dispatch({ type: types.DECREMENT })
+      const next = store.dispatch;
+
+      // this.stateDate = store.dispatch({ type: types.DECREMENT });
+      store.dispatch = action =>  {
+        try {
+          console.log('this state', store.getState());
+          console.log('action', action);
+          next(action);
+          console.log('next state', store.getState());
+        } catch (error) {
+          console.log(error)
+        }
+      };
+
+      this.stateDate = store.dispatch({ type: types.DECREMENT });
     }
 
     bindEvents() {

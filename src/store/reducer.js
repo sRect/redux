@@ -1,5 +1,5 @@
 import * as types from '@/store/actionType';
-import { combineReducers } from './util'
+import combineReducers from './combineReducers';
 
 // InfoReducer 接收的 state 是 state.info
 const InfoReducer = (state, action) => {

@@ -18,7 +18,6 @@ function createStore() {
   const dispatch = action => {
     // reducer 接收老状态和action，返回一个新状态
     state = reducer(state, action);
-    console.log(listeners)
     listeners.forEach(fn => fn());
   }
 
