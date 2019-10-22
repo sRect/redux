@@ -31,16 +31,19 @@ function createStore(reducer) {
 const store = createStore(reducer);
 const next = store.dispatch;
 
-const loggerMiddleware = action => { // 记录日志中间件
-  console.log('this state', store.getState());
-  console.log('action', action);
+const loggerMiddleware = next => action => { // 记录日志中间件
+  // console.log('this state', store.getState());
+  // console.log('action', action);
   next(action);
-  console.log('next state', store.getState());
+  // console.log('next state', store.getState());
 }
 
-const exceptionMiddleware = action => { // 记录异常中间件
+const exceptionMiddleware = next => action => { // 记录异常中间件
+  // console.log(next)
+  // console.log(action)
   try {
-    loggerMiddleware(action);
+    // loggerMiddleware(action); //  这里写死了loggerMiddleware
+    next(action);
   } catch (error) {
     console.log(error)
   }
@@ -55,6 +58,6 @@ const exceptionMiddleware = action => { // 记录异常中间件
 //   }
 // }
 
-store.dispatch = exceptionMiddleware;
-
+// store.dispatch = exceptionMiddleware;
+store.dispatch = exceptionMiddleware(loggerMiddleware(next));
 export default store;
