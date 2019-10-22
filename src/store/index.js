@@ -3,8 +3,9 @@ import reducer from '@/store/reducer';
 import exceptionMiddleware from '@/store/middleware/exceptionMiddleware'; 
 import loggerMiddleware from '@/store/middleware/loggerMiddleware';
 import timeMiddleware from '@/store/middleware/timeMiddleware';
+import applyMiddleware from '@/store/applyMiddleware';
 
-function createStore(reducer) {
+function createStore(reducer, initState) {
   let state = initState;
   let listeners = [];
   const getState = () => state;
@@ -31,39 +32,14 @@ function createStore(reducer) {
   }
 }
 
-const store = createStore(reducer);
-const next = store.dispatch;
+// const store = createStore(reducer, initState);
+const newCreateStore = applyMiddleware(exceptionMiddleware, timeMiddleware, loggerMiddleware)(createStore);
+const store = newCreateStore(reducer, initState);
+// const next = store.dispatch;
 
-// const loggerMiddleware = store => next => action => { // 记录日志中间件
-//   console.log('this state', store.getState());
-//   console.log('action', action);
-//   next(action);
-//   console.log('next state', store.getState());
-// }
+// const logger = loggerMiddleware(store);
+// const exception = exceptionMiddleware(store);
+// const time = timeMiddleware(store);
+// store.dispatch = exception(time(logger(next)));
 
-// const exceptionMiddleware = store => next => action => { // 记录异常中间件
-//   // console.log(next)
-//   // console.log(action)
-//   try {
-//     // loggerMiddleware(action); //  这里写死了loggerMiddleware
-//     next(action);
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-
-// 重写store.dispatch（记录日志，记录异常）
-// store.dispatch = (action) => {
-//   try {
-//     loggerMiddleware(action);
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-
-// store.dispatch = exceptionMiddleware;
-const logger = loggerMiddleware(store);
-const exception = exceptionMiddleware(store);
-const time = timeMiddleware(store);
-store.dispatch = exception(time(logger(next)));
 export default store;
