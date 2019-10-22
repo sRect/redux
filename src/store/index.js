@@ -1,7 +1,8 @@
 import { initState } from '@/store/state';
 import reducer from '@/store/reducer';
-import exceptionMiddleware from '@/store/middleware/exceptionMiddleware';
+import exceptionMiddleware from '@/store/middleware/exceptionMiddleware'; 
 import loggerMiddleware from '@/store/middleware/loggerMiddleware';
+import timeMiddleware from '@/store/middleware/timeMiddleware';
 
 function createStore(reducer) {
   let state = initState;
@@ -63,5 +64,6 @@ const next = store.dispatch;
 // store.dispatch = exceptionMiddleware;
 const logger = loggerMiddleware(store);
 const exception = exceptionMiddleware(store);
-store.dispatch = exception(logger(next));
+const time = timeMiddleware(store);
+store.dispatch = exception(time(logger(next)));
 export default store;
