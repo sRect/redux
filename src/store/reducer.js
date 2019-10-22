@@ -41,6 +41,4 @@ const reducer = combineReducers({
   info: InfoReducer
 });
 
-console.log(reducer)
-
 export default reducer;

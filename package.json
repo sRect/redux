@@ -6,11 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel_build": "babel src -d dist",
-    "start": "cross-env NODE_ENV=development webpack-dev-server",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --progress",
     "server": "npm run start",
-    "build:dev": "cross-env NODE_ENV=development webpack",
-    "build:pro": "cross-env NODE_ENV=production webpack",
-    "build": "npm run build:pro"
+    "build:dev": "cross-env NODE_ENV=development webpack --progress",
+    "build:pro": "cross-env NODE_ENV=production webpack --progress",
+    "build": "npm run build:pro --progress"
   },
   "keywords": [],
   "author": "",

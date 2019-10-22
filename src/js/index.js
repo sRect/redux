@@ -1,6 +1,6 @@
 // https://mp.weixin.qq.com/s/1jstaEeSUq2eMIUXEqJb-A
 // https://github.com/brickspert/blog/issues/22#coordination
-import createStore from '@/store/index';
+import store from '@/store/index';
 import * as types from '@/store/actionType';
 
 window.onload = function() {
@@ -70,20 +70,6 @@ window.onload = function() {
     }
 
     decrement = () => {
-      const next = store.dispatch;
-
-      // this.stateDate = store.dispatch({ type: types.DECREMENT });
-      store.dispatch = action =>  {
-        try {
-          console.log('this state', store.getState());
-          console.log('action', action);
-          next(action);
-          console.log('next state', store.getState());
-        } catch (error) {
-          console.log(error)
-        }
-      };
-
       this.stateDate = store.dispatch({ type: types.DECREMENT });
     }
 
@@ -111,6 +97,5 @@ window.onload = function() {
   }
 
   const myRedux = new MyRedux();
-  const store = createStore();
   myRedux.init();
 }
