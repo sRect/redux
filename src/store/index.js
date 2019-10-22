@@ -1,5 +1,7 @@
 import { initState } from '@/store/state';
 import reducer from '@/store/reducer';
+import exceptionMiddleware from '@/store/middleware/exceptionMiddleware';
+import loggerMiddleware from '@/store/middleware/loggerMiddleware';
 
 function createStore(reducer) {
   let state = initState;
@@ -31,23 +33,23 @@ function createStore(reducer) {
 const store = createStore(reducer);
 const next = store.dispatch;
 
-const loggerMiddleware = store => next => action => { // 记录日志中间件
-  console.log('this state', store.getState());
-  console.log('action', action);
-  next(action);
-  console.log('next state', store.getState());
-}
+// const loggerMiddleware = store => next => action => { // 记录日志中间件
+//   console.log('this state', store.getState());
+//   console.log('action', action);
+//   next(action);
+//   console.log('next state', store.getState());
+// }
 
-const exceptionMiddleware = store => next => action => { // 记录异常中间件
-  // console.log(next)
-  // console.log(action)
-  try {
-    // loggerMiddleware(action); //  这里写死了loggerMiddleware
-    next(action);
-  } catch (error) {
-    console.log(error)
-  }
-}
+// const exceptionMiddleware = store => next => action => { // 记录异常中间件
+//   // console.log(next)
+//   // console.log(action)
+//   try {
+//     // loggerMiddleware(action); //  这里写死了loggerMiddleware
+//     next(action);
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 
 // 重写store.dispatch（记录日志，记录异常）
 // store.dispatch = (action) => {
