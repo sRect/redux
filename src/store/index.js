@@ -33,8 +33,8 @@ function createStore(reducer, initState) {
 }
 
 // const store = createStore(reducer, initState);
-const newCreateStore = applyMiddleware(exceptionMiddleware, timeMiddleware, loggerMiddleware)(createStore);
-const store = newCreateStore(reducer, initState);
+const store = applyMiddleware(exceptionMiddleware, timeMiddleware, loggerMiddleware)(createStore)(reducer, initState);
+// const store = newCreateStore(reducer, initState);
 // const next = store.dispatch;
 
 // const logger = loggerMiddleware(store);
